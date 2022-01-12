@@ -115,12 +115,6 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
       });
   };
 
-  // function to load detail data
-  const loadDetail = (id) => {
-    let index = data.findIndex((item) => item.id === id);
-    setDetail(data[index]);
-  };
-
   // function to toggle the search option
   const toggle = () => setonSearch(!onSearch);
 
@@ -318,7 +312,7 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
                             </td>
                             <td className="tb-tnx-amount is-alt">
                               <div className="tb-tnx-total">
-                                <span className="title">{item.meta?.description}</span>
+                                <span className="title">{item.meta?.description ?? item?.description}</span>
                               </div>
                             </td>
                             <td className="tb-tnx-amount is-alt">
@@ -345,7 +339,7 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
                                   <ul className="link-list-plain">
                                     <li
                                       onClick={() => {
-                                        loadDetail(item.id);
+                                        setDetail(item);
                                         setViewModal(true);
                                       }}
                                     >
@@ -518,7 +512,7 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
               </Col>
               <Col lg={6}>
                 <span className="sub-text">Description </span>
-                <span className="caption-text text-break">{detail?.meta?.description ?? "-"}</span>
+                <span className="caption-text text-break">{detail?.meta?.description ?? detail?.description}</span>
               </Col>
               <Col lg={6}>
                 <span className="sub-text">Transaction Amount</span>
