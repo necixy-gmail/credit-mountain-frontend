@@ -23,3 +23,6 @@
 6. Payments - It has all the transactions and also deals with Refund functionality.
 
 7. Create Payments - It has access to charege a user via Stripe or Braintree payment gateway.
+
+Code is deployed and live on the given url: 
+    https://credit-mountain-b80fe.web.app/
