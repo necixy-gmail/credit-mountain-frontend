@@ -1,0 +1,11 @@
+.imageContainer {
+  background-image: url("./loginImage.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 768px) {
+  .imageContainer {
+    display: none;
+  }
+}
