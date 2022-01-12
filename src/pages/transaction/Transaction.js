@@ -33,17 +33,19 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
   });
   const [viewModal, setViewModal] = useState(false);
   const [detail, setDetail] = useState({});
-  const [data, setData] = useState([...transactionData]);
+  const [data, setData] = useState([]);
   const [formData, setFormData] = useState({
     amount: "",
-    reason: "",
+    reason: "duplicate",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(10);
   const [sort, setSortState] = useState("");
   const [refundItem, setRefundItem] = useState();
   const [loading, setloading] = useState(false);
-
+  useEffect(() => {
+    setData([...transactionData]);
+  }, [transactionData]);
   const sortingFunc = (params) => {
     let defaultData = data;
     if (params === "asc") {
@@ -76,7 +78,7 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
   const resetForm = () => {
     setFormData({
       amount: "",
-      reason: "",
+      reason: "duplicate",
     });
   };
 
@@ -99,6 +101,8 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
       .then((res) => {
         fetchdata();
         successToast("Success");
+        resetForm();
+        setModal({ add: false });
       })
       .catch((err) => {
         console.log("error", err);
@@ -109,9 +113,6 @@ const Transaction = ({ transactionData, setTransactionData, fetchdata }) => {
       .finally(() => {
         setloading(false);
       });
-
-    resetForm();
-    setModal({ add: false });
   };
 
   // function to load detail data

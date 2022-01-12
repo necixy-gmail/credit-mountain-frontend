@@ -46,6 +46,7 @@ const UserList = () => {
   const [tablesm, updateTableSm] = useState(false);
   const [onSearch, setonSearch] = useState(true);
   const [loading, setloading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(false);
   const [onSearchText, setSearchText] = useState("");
   const [modal, setModal] = useState({
     edit: false,
@@ -82,11 +83,15 @@ const UserList = () => {
   const userListData = useSelector((state) => state?.reducer?.userListData);
   const dispatch = useDispatch();
   const getUsersList = async () => {
+    setFetchLoading(true);
     getUsersApi({ token: TOKEN })
       .then((res) => {
         dispatch(setUsersListData(res?.data?.data?.users));
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setFetchLoading(false);
+      });
   };
   useEffect(() => {
     setData([...userListData]);
@@ -232,6 +237,27 @@ const UserList = () => {
 
   const { errors, register, handleSubmit } = useForm();
 
+  if (fetchLoading && !data?.length) {
+    return (
+      <React.Fragment>
+        <Head title={"Credit Manager"} />
+        <Content>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+              flexDirection: "column",
+              height: "80vh",
+            }}
+          >
+            <Spinner size="xl" color="dark" />
+          </div>
+        </Content>
+      </React.Fragment>
+    );
+  }
   return (
     <React.Fragment>
       <Head title="Credit Mountain"></Head>
